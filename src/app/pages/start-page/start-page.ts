@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { GameRoomService } from '../../services/game-room';
 import { CreateRoomReqDTO } from '../../models/CreateRoomReqDTO';
+import { PlayerSessionService } from '../../services/player-session';
 
 @Component({
   selector: 'app-start-page',
@@ -13,6 +14,8 @@ import { CreateRoomReqDTO } from '../../models/CreateRoomReqDTO';
 export class StartPage {
 
   private gameRoomService = inject(GameRoomService);
+
+  private playerSessionService = inject(PlayerSessionService);
 
   private router = inject(Router);
 
@@ -47,6 +50,7 @@ export class StartPage {
       next: (roomEntryResponse) => {
 
         console.log(roomEntryResponse);
+        this.playerSessionService.savePlayerId(roomEntryResponse.playerId);
         this.router.navigate(['/room', roomEntryResponse.gameRoomDTO.roomCode])
 
       },
