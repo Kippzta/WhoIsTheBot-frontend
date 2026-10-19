@@ -1,1 +1,42 @@
-<p>start-page works!</p>
+<h1>Vem är boten?</h1>
+
+<h2>Skapa spelrum</h2>
+<form [formGroup]="createRoomForm" (ngSubmit)="onSubmitCreateRoom()">
+
+    <label>
+        Ange ett användarnamn:
+        <input type="text" formControlName="username">
+    </label>
+<br>
+    <button type="submit" [disabled]="createRoomForm.invalid">Skapa</button>
+</form>
+
+@if (errorMsgCreate()) {
+
+    <p class="errorMsg"> {{ errorMsgCreate() }}</p>
+
+}
+<br>
+
+<h2>Gå med i spelrum</h2>
+<form [formGroup]="joinRoomForm" (ngSubmit)="onSubmitJoinRoom()">
+
+    <label>
+        Ange ett användarnamn:
+        <input type="text" formControlName="username">
+    </label>
+<br>
+    <label>
+        Ange rumskod:
+        <input type="text" formControlName="roomCode" maxlength="5">
+    </label>
+<br>
+    <button type="submit" [disabled]="joinRoomForm.invalid">Gå med</button>
+
+</form>
+
+@if (errorMsgJoin()) {
+
+    <p class="errorMsg"> {{ errorMsgJoin() }}</p>
+
+}
