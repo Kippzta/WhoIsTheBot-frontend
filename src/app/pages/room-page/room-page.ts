@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-room-page',
@@ -6,4 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './room-page.html',
   styleUrl: './room-page.css',
 })
-export class RoomPage {}
+export class RoomPage {
+
+}

@@ -1,1 +1,19 @@
-<p>start-page works!</p>
+<h1>Vem är botten?</h1>
+
+<form [formGroup]="createRoomForm" (ngSubmit)="onSubmitCreateRoom()">
+
+    <label>
+        Ange användarnamn:
+        <input type="text" formControlName="username">
+    </label>
+
+    <button type="submit" [disabled]="createRoomForm.invalid">Skapa Spelrum</button>
+
+
+</form>
+
+@if (errorMsg()) {
+
+    <p class="errorMsg"> {{ errorMsg() }}</p>
+
+}
