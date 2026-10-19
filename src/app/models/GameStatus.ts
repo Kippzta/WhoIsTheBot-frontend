@@ -1,0 +1,1 @@
+export type GameStatus = "WAITING" | "CHATTING" | "VOTING" | "FINISHED";
