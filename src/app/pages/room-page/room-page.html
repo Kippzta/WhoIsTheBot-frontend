@@ -1,1 +1,27 @@
-<p>room-page works!</p>
+@if (gameRoom(); as room) {
+
+<div class="lobby">
+    <h1>Lobby</h1>
+    
+    <h2>Rum: {{ room.roomCode }}</h2>
+    
+
+    <h3>Spelare</h3>
+    <ul>
+        @for (player of room.players; track player.username) {
+        <li>{{ player.username }}
+            @if (player.isHost) {
+            (Host)
+            }
+        </li>
+        }
+    </ul>
+
+
+
+</div>
+} @else {
+<div class="waiting">
+    <p>Ansluter...</p>
+</div>
+}
