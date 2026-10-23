@@ -1,25 +1,15 @@
 @if (gameRoom(); as room) {
 
-<div class="lobby">
-    <h1>Lobby</h1>
-    
-    <h2>Rum: {{ room.roomCode }}</h2>
-    
+    @switch (room.gameStatus) {
 
-    <h3>Spelare</h3>
-    <ul>
-        @for (player of room.players; track player.username) {
-        <li>{{ player.username }}
-            @if (player.isHost) {
-            (Host)
-            }
-        </li>
-        }
-    </ul>
+        @case ('WAITING') { <app-lobby></app-lobby> }
 
+        @case ('CHATTING') { <h2>Spelet har startat!</h2> }
+ 
+        
 
+    }
 
-</div>
 } @else {
 <div class="waiting">
     <p>Ansluter...</p>

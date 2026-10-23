@@ -7,6 +7,8 @@ export class PlayerSessionService {
 
   private readonly playerSessionKey = 'playerId';
 
+  private readonly playerUsernameKey = 'username';
+
 
   savePlayerId(playerId: string): void {
 
@@ -20,5 +22,16 @@ export class PlayerSessionService {
 
   }
 
+  saveUsername(username: string): void {
+
+    sessionStorage.setItem(this.playerUsernameKey, username);
+
+  }
+
+  getUsername(): string | null {
+
+    return sessionStorage.getItem(this.playerUsernameKey);
+
+  }
 
 }
