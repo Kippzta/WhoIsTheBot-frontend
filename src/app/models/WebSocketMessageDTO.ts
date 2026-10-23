@@ -1,4 +1,4 @@
-import { WebSocketMessageType } from "./WebSocketMessageType";
+import { WebSocketMessageType } from "../types/WebSocketMessageType";
 
 export interface WebSocketMessageDTO<T> {
 

@@ -1,0 +1,1 @@
+export type WebSocketMessageType = "ROOM_UPDATED" | "START_GAME";

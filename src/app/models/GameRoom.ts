@@ -1,4 +1,4 @@
-import { GameStatus } from "./GameStatus";
+import { GameStatus } from "../types/GameStatus";
 import { PlayerDTO } from "./PlayerDTO";
 
 export interface GameRoomDTO {

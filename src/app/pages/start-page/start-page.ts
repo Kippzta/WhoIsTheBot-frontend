@@ -67,7 +67,7 @@ export class StartPage {
       next: (roomEntryResponse) => {
 
         console.log(roomEntryResponse);
-        this.savePlayerAndNavigate(roomEntryResponse);
+        this.savePlayerAndNavigate(roomEntryResponse, username);
 
       },
 
@@ -112,7 +112,7 @@ export class StartPage {
 
       next: (roomEntryResponse) => {
         console.log(roomEntryResponse);
-        this.savePlayerAndNavigate(roomEntryResponse);
+        this.savePlayerAndNavigate(roomEntryResponse, username);
       },
       error: () => {
 
@@ -145,9 +145,10 @@ export class StartPage {
 
   }
 
-  private savePlayerAndNavigate(roomEntryResponse: RoomEntryRespDTO): void {
+  private savePlayerAndNavigate(roomEntryResponse: RoomEntryRespDTO, username: string): void {
 
     this.playerSessionService.savePlayerId(roomEntryResponse.playerId);
+    this.playerSessionService.saveUsername(username);
     this.router.navigate(['/room', roomEntryResponse.gameRoomDTO.roomCode]);
 
   }

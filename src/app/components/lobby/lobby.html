@@ -1,0 +1,29 @@
+
+@if (gameRoom(); as room) {
+    <div class="lobby">
+        <h1>Lobby</h1>
+        
+        <h2>Rum: {{ room.roomCode }}</h2>
+        
+    
+        <h3>Spelare</h3>
+        <ul>
+            @for (player of room.players; track player.username) {
+            <li>{{ player.username }}
+                @if (player.isHost) {
+                (Host)
+                }
+            </li>
+            }
+        </ul>
+        @if (isHost()) {
+
+            <button (click)="onStartGame()" [disabled]="!enoughPlayersToStartGame()">Starta spelet</button>
+        } @else {
+
+            <p>Väntar på att hosten ska starta spelet...</p>
+
+        }
+    
+    </div>
+}
