@@ -66,7 +66,6 @@ export class StartPage {
 
       next: (roomEntryResponse) => {
 
-        console.log(roomEntryResponse);
         this.savePlayerAndNavigate(roomEntryResponse, username);
 
       },
@@ -93,7 +92,7 @@ export class StartPage {
 
     const username = this.validateUsername(usernameInput);
 
-    if(roomCodeInput.length !== this.roomCodeLength) {
+    if (roomCodeInput.length !== this.roomCodeLength) {
 
       this.errorMsgJoin.set('Rumskoden måste vara exakt 5 tecken')
       return
@@ -111,7 +110,6 @@ export class StartPage {
     this.gameRoomService.joinRoom(joinRequest).subscribe({
 
       next: (roomEntryResponse) => {
-        console.log(roomEntryResponse);
         this.savePlayerAndNavigate(roomEntryResponse, username);
       },
       error: () => {
