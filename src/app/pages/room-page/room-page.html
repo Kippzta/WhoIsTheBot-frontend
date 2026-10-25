@@ -4,7 +4,11 @@
 
         @case ('WAITING') { <app-lobby></app-lobby> }
 
-        @case ('CHATTING') { <h2>Spelet har startat!</h2> }
+        @case ('CHATTING') { 
+
+            <h2>Spelet har startat!</h2> 
+            <p>Du är: {{ myAlias() }}</p>
+        }
  
         
 
