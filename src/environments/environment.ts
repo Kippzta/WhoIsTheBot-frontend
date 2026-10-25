@@ -1,4 +1,4 @@
 export const env = {
-  apiUrl: 'http://localhost:8080/api',
-  wsUrl: 'ws://localhost:8080/ws'
+  apiUrl: 'https://whoisthebot-backend.onrender.com/api',
+  wsUrl: 'wss://whoisthebot-backend.onrender.com/ws'
 };
