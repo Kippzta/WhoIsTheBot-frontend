@@ -1,1 +1,1 @@
-export type WebSocketMessageType = "ROOM_UPDATED" | "START_GAME" | "GAME_STATUS_CHANGED" | "ALIAS_ASSIGNED";
+export type WebSocketMessageType = "ROOM_UPDATED" | "START_GAME" | "GAME_STATUS_CHANGED" | "ALIAS_ASSIGNED" | "CHAT_MESSAGE";
