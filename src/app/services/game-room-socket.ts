@@ -3,6 +3,7 @@ import { GameRoomDTO } from '../models/GameRoom';
 import { env } from '../../environments/environment';
 import { WebSocketMessageDTO } from '../models/WebSocketMessageDTO';
 import { ServerMessage } from '../types/ServerMessage';
+import { ChatMessageRespDTO } from '../models/ChatMessageRespDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,9 @@ import { ServerMessage } from '../types/ServerMessage';
 export class GameRoomSocketService {
 
   private socket: WebSocket | null = null;
+
+  // signal som inhåller alla chattmeddelanden med tillhörande alias
+  chatMessages = signal<ChatMessageRespDTO[]>([]);
 
   //signal för att kunna uppdatera komponenters vy när gameRoom ändras
   gameRoom = signal<GameRoomDTO | null>(null);
@@ -25,31 +29,38 @@ export class GameRoomSocketService {
     this.socket.onmessage = (event) => {
 
       // tar emot och parsar meddelandet från servern
-      const message: ServerMessage = JSON.parse(event.data);
+      const serverMessage: ServerMessage = JSON.parse(event.data);
 
 
-      switch (message.type) {
+      switch (serverMessage.type) {
 
         // OM message är av typen ROOM_UPDATED, uppdatera gameRoom signalen med den nya datan
         case 'ROOM_UPDATED':
-          this.gameRoom.set(message.data);
+          this.gameRoom.set(serverMessage.data);
           break;
 
         //OM message är av typen GAME_STATUS_CHANGED, uppdatera gameRoom signalen med den nya gameStatus från servern
         case 'GAME_STATUS_CHANGED':
           this.gameRoom.update(oldGameRoom => (oldGameRoom) ? {
-            ...oldGameRoom, gameStatus: message.data
+            ...oldGameRoom, gameStatus: serverMessage.data
           } : null);
           break;
 
           //OM messaage är av typen ALIAS_ASSIGNED, uppdaterar spelarens egna alias som kommer från backenden
         case 'ALIAS_ASSIGNED':
-          this.myAlias.set(message.data);
+          this.myAlias.set(serverMessage.data);
           break;
+
+          //OM message är av typen CHAT_MESSAGE uppdatera meddelande listan med det nya meddelandet sist.
+          case 'CHAT_MESSAGE':
+            this.chatMessages.update(oldMessages =>
+              [...oldMessages, serverMessage.data]);
+              break;
       }
     };
   }
 
+  
   disconnect(): void {
 
     if (this.socket !== null) {
@@ -61,6 +72,8 @@ export class GameRoomSocketService {
       this.gameRoom.set(null);
 
       this.myAlias.set(null);
+
+      this.chatMessages.set([]);
     }
 
   }
@@ -73,6 +86,18 @@ export class GameRoomSocketService {
 
     this.socket?.send(messageText);
 
+  }
+
+
+  // Skapar och skickar meddelandet till backend som ska innehålle typen CHAT_MESSAGE och en text som är meddelandet använadren skrev
+  sendChatMessage(text: string): void{
+
+    const chatMessage: WebSocketMessageDTO<string> = { type: 'CHAT_MESSAGE', data: text};
+
+    const chatMessageText = JSON.stringify(chatMessage);
+
+    this.socket?.send(chatMessageText);
+    
   }
 
 }

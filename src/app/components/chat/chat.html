@@ -1,0 +1,18 @@
+<h1>Välkommen till chatten!</h1>
+
+<ul>
+    @for (message of chatMessages(); track $index) {
+
+    <li>
+        <strong>{{ message.alias }}:</strong> {{ message.text }}
+    </li>
+
+    }
+</ul>
+
+<form [formGroup]="chatRoomForm" (ngSubmit)="onSendMessage()">
+
+    <input type="text" formControlName="text" [maxlength]="MAX_TEXT_LENGTH" placeholder="Skriv här...">
+    <button type="submit" [disabled]="chatRoomForm.invalid">Skicka</button>
+
+</form>

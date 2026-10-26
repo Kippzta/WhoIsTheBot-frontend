@@ -3,10 +3,11 @@ import { ActivatedRoute, Router} from '@angular/router';
 import { PlayerSessionService } from '../../services/player-session';
 import { GameRoomSocketService } from '../../services/game-room-socket';
 import { Lobby } from '../../components/lobby/lobby';
+import { Chat } from '../../components/chat/chat';
 
 @Component({
   selector: 'app-room-page',
-  imports: [Lobby],
+  imports: [Lobby, Chat],
   templateUrl: './room-page.html',
   styleUrl: './room-page.css',
 })
@@ -23,6 +24,8 @@ export class RoomPage implements OnInit, OnDestroy{
   protected gameRoom = this.gameRoomSocketService.gameRoom;
 
   protected myAlias = this.gameRoomSocketService.myAlias;
+
+  
 
   ngOnInit(): void {
     
