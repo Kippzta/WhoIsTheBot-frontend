@@ -23,9 +23,6 @@ export class RoomPage implements OnInit, OnDestroy{
 
   protected gameRoom = this.gameRoomSocketService.gameRoom;
 
-  protected myAlias = this.gameRoomSocketService.myAlias;
-
-  
 
   ngOnInit(): void {
     

@@ -1,1 +1,2 @@
-export type WebSocketMessageType = "ROOM_UPDATED" | "START_GAME" | "GAME_STATUS_CHANGED" | "ALIAS_ASSIGNED" | "CHAT_MESSAGE";
+// Typer som skickas till backend ffrån klienten
+export type WebSocketMessageType = "START_GAME" | "CHAT_MESSAGE";

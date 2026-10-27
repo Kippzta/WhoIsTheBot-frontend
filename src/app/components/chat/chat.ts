@@ -9,14 +9,16 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrl: './chat.css',
 })
 export class Chat {
+  
+  private gameRoomSocketService = inject(GameRoomSocketService)
 
   protected readonly MAX_TEXT_LENGTH = 150;
-
-  private gameRoomSocketService = inject(GameRoomSocketService)
 
   protected chatMessages = this.gameRoomSocketService.chatMessages;
 
   protected myAlias = this.gameRoomSocketService.myAlias;
+
+  protected starterQuestion = this.gameRoomSocketService.starterQuestion;
 
   chatRoomForm = new FormGroup({
 

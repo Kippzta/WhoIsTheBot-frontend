@@ -1,5 +1,14 @@
 <h1>Välkommen till chatten!</h1>
+<p>Ditt alias: {{ myAlias() }}</p>
 
+@if (starterQuestion()) {
+
+    <h2> {{ starterQuestion() }}</h2>
+
+} @else {
+
+    <h2>Laddar in fråga</h2>
+}
 <ul>
     @for (message of chatMessages(); track $index) {
 
