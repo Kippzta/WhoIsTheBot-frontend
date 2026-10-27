@@ -12,6 +12,9 @@ export class GameRoomSocketService {
 
   private socket: WebSocket | null = null;
 
+  // signal som inneåhller och visar startfrågan när spelet har startat
+  starterQuestion = signal<string | null>(null);
+
   // signal som inhåller alla chattmeddelanden med tillhörande alias
   chatMessages = signal<ChatMessageRespDTO[]>([]);
 
@@ -56,6 +59,11 @@ export class GameRoomSocketService {
             this.chatMessages.update(oldMessages =>
               [...oldMessages, serverMessage.data]);
               break;
+
+              //OM message är av typen QUESTION_ASSIGNED uppdatera startfrågan med värdet från servern
+              case 'QUESTION_ASSIGNED':
+                this.starterQuestion.set(serverMessage.data);
+                break;
       }
     };
   }
@@ -74,6 +82,8 @@ export class GameRoomSocketService {
       this.myAlias.set(null);
 
       this.chatMessages.set([]);
+
+      this.starterQuestion.set(null);
     }
 
   }
