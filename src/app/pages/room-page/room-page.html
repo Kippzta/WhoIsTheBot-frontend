@@ -2,7 +2,9 @@
 
     @switch (room.gameStatus) {
 
-        @case ('WAITING') { <app-lobby></app-lobby> }
+        @case ('WAITING') { 
+            
+            <app-lobby></app-lobby> }
 
         @case ('CHATTING') { 
 
@@ -11,8 +13,12 @@
 
         @case ('VOTING') 
         {
-            <h1>RÖSTA</h1>
-            <h2>Vem är botten?</h2>
+           <app-voting> </app-voting>
+        }
+
+        @case ('FINISHED') {
+
+            <app-result></app-result>
         }
     }
 

@@ -4,6 +4,7 @@ import { env } from '../../environments/environment';
 import { WebSocketMessageDTO } from '../models/WebSocketMessageDTO';
 import { ServerMessage } from '../types/ServerMessage';
 import { ChatMessageRespDTO } from '../models/ChatMessageRespDTO';
+import { GameResultRespDTO } from '../models/GameResultRespDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,12 @@ export class GameRoomSocketService {
 
   //signal som visar hur många sekunder det är kvar på rundan
   roundSecondsLeft = signal<number | null>(null);
+
+  //signal som innehåller en lista med de alias som går att rösta på
+  aliasesToVoteFor = signal<string[]>([]);
+
+  //sifnal som innehåller resultatet, vem som var vem och hur man röstade
+  gameResult = signal<GameResultRespDTO | null>(null)
 
 
   // ansluter till websocket servern
@@ -79,6 +86,16 @@ export class GameRoomSocketService {
           case 'TIMER_STARTED':
             this.startCountDown(serverMessage.data);
             break;
+
+            //Om message är av tpyen VOTING_STARTED skicka in de alias från backend som var med i spelet som går att rösta på
+            case 'VOTING_STARTED':
+              this.aliasesToVoteFor.set(serverMessage.data);
+              break;
+
+              //OM message är GAME_RESULT uppdatera resultatatet med vem som var vem och hur de röstade
+              case 'GAME_RESULT':
+                this.gameResult.set(serverMessage.data);
+              break;
       }
     };
   }
@@ -103,6 +120,10 @@ export class GameRoomSocketService {
       this.roundSecondsLeft.set(null);
 
       this.stopCountDown();
+
+      this.aliasesToVoteFor.set([]);
+
+      this.gameResult.set(null);
     }
 
   }
@@ -158,7 +179,6 @@ export class GameRoomSocketService {
       }
     }, 1000);
 
-
   }
 
   // OM det finns en countDown stoppa den och sätt timern till null;
@@ -171,9 +191,15 @@ export class GameRoomSocketService {
   }
 
     private sendChatTimeEnd(): void {
-      const stopTimeMessage: WebSocketMessageDTO<null> = { type: 'CHAT_TIME_END', data: null}
+      const stopTimeMessage: WebSocketMessageDTO<null> = { type: 'CHAT_TIME_END', data: null};
       this.socket?.send(JSON.stringify(stopTimeMessage));
     }
 
+    sendVote(alias: string): void {
+
+      const voteMessage: WebSocketMessageDTO<string> = { type: 'VOTE', data: alias };
+      this.socket?.send(JSON.stringify(voteMessage));
+
+    }
 }
 

@@ -4,10 +4,12 @@ import { PlayerSessionService } from '../../services/player-session';
 import { GameRoomSocketService } from '../../services/game-room-socket';
 import { Lobby } from '../../components/lobby/lobby';
 import { Chat } from '../../components/chat/chat';
+import { Voting } from '../../components/voting/voting';
+import { Result } from '../../components/result/result';
 
 @Component({
   selector: 'app-room-page',
-  imports: [Lobby, Chat],
+  imports: [Lobby, Chat, Voting, Result],
   templateUrl: './room-page.html',
   styleUrl: './room-page.css',
 })

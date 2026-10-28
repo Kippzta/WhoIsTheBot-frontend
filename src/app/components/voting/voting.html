@@ -1,0 +1,15 @@
+<h1>RÖSTA</h1>
+<h2>Vem tror du är boten?</h2>
+
+@if (myVote() === null) {
+
+    <p>Rösta på den du tror är boten:</p>
+    @for (alias of voteableAliases(); track alias) {
+
+        <button type="button" (click)="onVote(alias)"> {{ alias }} </button>
+
+    } 
+
+} @else {
+<p>Du röstade på: {{ myVote() }}. Väntar tills alla röstat klart...</p>
+}
