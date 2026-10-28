@@ -9,6 +9,12 @@
 
     <h2>Laddar in fråga</h2>
 }
+
+@if (roundTimer() !== null) {
+
+    <p>Tid kvar att chatta: {{ roundTimer() }}s</p>
+
+}
 <ul>
     @for (message of chatMessages(); track $index) {
 
