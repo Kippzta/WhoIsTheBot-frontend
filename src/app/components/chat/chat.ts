@@ -20,6 +20,8 @@ export class Chat {
 
   protected starterQuestion = this.gameRoomSocketService.starterQuestion;
 
+  protected roundTimer = this.gameRoomSocketService.roundSecondsLeft;
+
   chatRoomForm = new FormGroup({
 
     text: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(this.MAX_TEXT_LENGTH)]})

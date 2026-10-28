@@ -9,3 +9,5 @@ export type ServerMessage =
     | { type: 'ALIAS_ASSIGNED'; data: string}
     | { type: 'CHAT_MESSAGE'; data: ChatMessageRespDTO}
     | { type: 'QUESTION_ASSIGNED'; data: string }
+    | { type: 'VOTING_STARTED'; data: string[] }
+    | { type: 'TIMER_STARTED'; data: number }
