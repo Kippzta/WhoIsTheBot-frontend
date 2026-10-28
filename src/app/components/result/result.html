@@ -1,0 +1,30 @@
+@if (gameResult(); as result) {
+
+    <h2>Boten var: {{ result.botAlias }}</h2>
+
+    <ul>
+        @for (player of result.playerResultRespDTO; track player.username) {
+            <li>
+                <strong>{{ player.username }}</strong>
+                @if (player.alias === myAlias()){ (du) }
+                var {{ player.alias }},
+                och röstade på {{ player.votedForAlias }}.
+
+                @if(player.guessedRight) {
+
+                    ✅ Rätt!
+
+                } @else {
+
+                    ❌ Fel
+
+                }
+
+            </li>
+        }
+            
+    </ul>
+
+} @else {
+    <h3>Rösterna räknas...</h3>
+}
