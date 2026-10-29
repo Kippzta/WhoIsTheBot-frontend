@@ -1,1 +1,212 @@
-/* You can add global styles to this file, and also import other style files */
+
+/* ===== Färger och typsnitt ===== */
+:root {
+  --bg: #030803;
+  --panel: #061206;
+  --green: #39ff6a;
+  --green-dim: #1f8f3d;
+  --green-faint: #0d3a18;
+  --red: #ff3b5c;
+  --glow: 0 0 6px rgba(57, 255, 106, 0.6);
+  --font-head: 'VT323', monospace;
+  --font-body: 'Share Tech Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: radial-gradient(ellipse at center, #071a0c 0%, var(--bg) 70%);
+  color: var(--green);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.5;
+  text-shadow: var(--glow);
+  padding: 24px 16px;
+}
+
+/* ===== tunna linjer över hela skärmen ===== */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.25) 3px
+  );
+  z-index: 10;
+}
+
+/* Terminalfönstret  */
+.terminal {
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--panel);
+  border: 1px solid var(--green-dim);
+  box-shadow: 0 0 24px rgba(57, 255, 106, 0.15), inset 0 0 40px rgba(0, 0, 0, 0.6);
+  padding: 28px 24px;
+  position: relative;
+}
+
+/* En liten "titelrad" högst upp, som ett gammalt program */
+.terminal::before {
+  content: 'KÄNNER_DU_BOTEN.EXE';
+  position: absolute;
+  top: -12px;
+  left: 16px;
+  background: var(--bg);
+  padding: 0 8px;
+  font-family: var(--font-head);
+  font-size: 18px;
+  color: var(--green-dim);
+  letter-spacing: 2px;
+}
+
+/* Rubriker  */
+h1, h2, h3 {
+  font-family: var(--font-head);
+  font-weight: normal;
+  letter-spacing: 1px;
+  margin: 0 0 12px;
+}
+
+h1 {
+  font-size: 44px;
+  text-transform: uppercase;
+}
+
+/* Prompt före, och en blinkande markör efter */
+h1::before {
+  content: '> ';
+  color: var(--green-dim);
+}
+
+h1::after {
+  content: '_';
+  animation: blink 1s steps(1) infinite;
+}
+
+h2 {
+  font-size: 30px;
+}
+
+h3 {
+  font-size: 24px;
+  color: var(--green-dim);
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+p {
+  margin: 0 0 12px;
+}
+
+strong {
+  color: #b6ffc8;
+}
+
+/* Listor: som rader i en terminal */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+li {
+  padding: 4px 0;
+  border-bottom: 1px dashed var(--green-faint);
+}
+
+/* ===== Knappar ===== */
+button {
+  font-family: var(--font-head);
+  font-size: 22px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--green);
+  background: transparent;
+  border: 1px solid var(--green);
+  padding: 6px 18px;
+  margin: 4px 8px 4px 0;
+  cursor: pointer;
+  text-shadow: var(--glow);
+  transition: background 0.15s, color 0.15s;
+}
+
+button::before {
+  content: '[ ';
+}
+
+button::after {
+  content: ' ]';
+}
+
+button:hover:not(:disabled),
+button:focus-visible {
+  background: var(--green);
+  color: var(--bg);
+  text-shadow: none;
+  outline: none;
+}
+
+button:disabled {
+  color: var(--green-faint);
+  border-color: var(--green-faint);
+  text-shadow: none;
+  cursor: not-allowed;
+}
+
+/* ===== Inmatningsfält ===== */
+input {
+  font-family: var(--font-body);
+  font-size: 17px;
+  color: var(--green);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--green-dim);
+  padding: 6px 2px;
+  margin: 4px 8px 4px 0;
+  min-width: 220px;
+  caret-color: var(--green);
+  text-shadow: var(--glow);
+}
+
+input::placeholder {
+  color: var(--green-dim);
+  opacity: 0.7;
+}
+
+input:focus {
+  outline: none;
+  border-bottom-color: var(--green);
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 12px 0;
+}
+
+/* ===== Mobil ===== */
+@media (max-width: 480px) {
+  h1 { font-size: 34px; }
+  .terminal { padding: 24px 16px; }
+  input { min-width: 0; flex: 1; }
+}
+
+/* Respekterar den som inte vill ha rörelser */
+@media (prefers-reduced-motion: reduce) {
+  h1::after { animation: none; }
+}

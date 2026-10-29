@@ -1,0 +1,97 @@
+.hint {
+  color: var(--green-dim);
+}
+
+/* Knapparna som ett rutnät av "måltavlor" */
+.targets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.target {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 20px 12px;
+  margin: 0;
+  font-size: 26px;
+}
+
+/* Inga hakparenteser på måltavlorna */
+.target::before,
+.target::after {
+  content: none;
+}
+
+.target-icon {
+  font-size: 32px;
+  transition: transform 0.3s;
+}
+
+/* Siktet snurrar och knappen "glitchar" när man håller över den */
+.target:hover .target-icon {
+  transform: rotate(90deg) scale(1.2);
+}
+
+.target:hover {
+  animation: glitch 0.3s steps(2) 2;
+}
+
+@keyframes glitch {
+  0%   { transform: translate(0); }
+  25%  { transform: translate(-2px, 1px); }
+  50%  { transform: translate(2px, -1px); }
+  75%  { transform: translate(-1px, -1px); }
+  100% { transform: translate(0); }
+}
+
+/* Efter rösten */
+.vote-locked {
+  text-align: center;
+  border: 1px solid var(--green);
+  padding: 24px;
+  margin-top: 16px;
+  animation: lock-in 0.4s ease-out;
+}
+
+@keyframes lock-in {
+  from { transform: scale(1.1); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.locked-label {
+  color: var(--green-dim);
+  letter-spacing: 4px;
+  margin: 0;
+}
+
+.locked-alias {
+  font-family: var(--font-head);
+  font-size: 48px;
+  margin: 4px 0 12px;
+}
+
+.waiting {
+  color: var(--green-dim);
+}
+
+.dots::after {
+  content: '';
+  animation: dots 1.5s steps(4) infinite;
+}
+
+@keyframes dots {
+  0%  { content: ''; }
+  25% { content: '.'; }
+  50% { content: '..'; }
+  75% { content: '...'; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .target:hover, .vote-locked, .dots::after {
+    animation: none;
+  }
+}

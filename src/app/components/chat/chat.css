@@ -1,0 +1,139 @@
+/* Rubrik, alias och timer på samma rad */
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.my-alias {
+  color: var(--green-dim);
+}
+
+.timer {
+  font-family: var(--font-head);
+  font-size: 32px;
+  border: 1px solid var(--green-dim);
+  padding: 2px 12px;
+  white-space: nowrap;
+}
+
+/* De sista 10 sekunderna blir timern röd och blinkar */
+.timer-low {
+  color: var(--red);
+  border-color: var(--red);
+  text-shadow: 0 0 6px rgba(255, 59, 92, 0.7);
+  animation: blink 1s steps(1) infinite;
+}
+
+.question {
+  font-family: var(--font-head);
+  font-size: 26px;
+  border-left: 3px solid var(--green);
+  padding-left: 12px;
+}
+
+.question-label {
+  color: var(--green-dim);
+}
+
+/* Själva chattfönstret*/
+.chat-window {
+  display: flex;
+  flex-direction: column;
+  height: 60vh;
+  min-height: 320px;
+  background: #020502;
+  border: 1px solid var(--green-dim);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8);
+}
+
+/* column-reverse gör att listan alltid håller sig scrollad längst ner,
+   så nya meddelanden syns utan att man behöver scrolla själv */
+.chat-log {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  padding: 8px 0;
+}
+
+.chat-lines {
+  margin: 0;
+}
+
+/* Varje rad: alias i en kolumn till vänster, texten till höger */
+.chat-line {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 12px;
+  padding: 3px 12px;
+  border-bottom: none;
+}
+
+.chat-alias {
+  text-align: right;
+  color: #8be9fd;
+  text-shadow: 0 0 6px rgba(139, 233, 253, 0.5);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chat-text {
+  overflow-wrap: anywhere;
+}
+
+/* Dina egna meddelanden markeras */
+.chat-line.mine {
+  background: rgba(57, 255, 106, 0.06);
+}
+
+.chat-line.mine .chat-alias {
+  color: #b6ffc8;
+}
+
+.chat-line.system .chat-alias,
+.chat-line.system .chat-text {
+  color: var(--green-dim);
+  font-style: italic;
+}
+
+/* ===== Inmatningen längst ner ===== */
+.chat-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 8px 12px;
+  border-top: 1px solid var(--green-dim);
+  background: var(--panel);
+}
+
+.chat-input input {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  border-bottom: none;
+}
+
+.chat-input button {
+  margin: 0;
+}
+
+.prompt {
+  font-family: var(--font-head);
+  font-size: 24px;
+  color: var(--green-dim);
+}
+
+/* Mobil: smalare aliaskolumn */
+@media (max-width: 480px) {
+  .chat-line {
+    grid-template-columns: 90px 1fr;
+    gap: 8px;
+  }
+  .chat-window {
+    height: 55vh;
+  }
+}

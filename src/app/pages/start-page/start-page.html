@@ -1,42 +1,52 @@
-<h1>Känner du boten?</h1>
+<div class="boot">
+    <p class="boot-line" style="--delay: 0.2s">&gt; Startar system...</p>
+    <p class="boot-line" style="--delay: 0.5s">&gt; Laddar AI-modul... <span class="ok">[OK]</span></p>
+    <p class="boot-line" style="--delay: 0.8s">&gt; En av spelarna är inte mänsklig. <span class="warn">[VARNING]</span></p>
+</div>
 
-<h2>Skapa spelrum</h2>
-<form [formGroup]="createRoomForm" (ngSubmit)="onSubmitCreateRoom()">
+<h1><span class="title-text">Känner du boten?</span></h1>
 
-    <label>
-        Ange ett användarnamn:
-        <input type="text" formControlName="username">
-    </label>
-<br>
-    <button type="submit" [disabled]="createRoomForm.invalid">Skapa</button>
-</form>
+<p class="intro">
+    Chatta i 90 sekunder. En av er är en AI. Rösta på vem du tror det är.
+</p>
 
-@if (errorMsgCreate()) {
+<div class="panels">
 
-    <p class="errorMsg"> {{ errorMsgCreate() }}</p>
+    <section class="panel">
+        <h2 class="panel-title">Skapa rum</h2>
 
-}
-<br>
+        <form [formGroup]="createRoomForm" (ngSubmit)="onSubmitCreateRoom()">
+            <label>
+                Användarnamn
+                <input type="text" formControlName="username" placeholder="ditt namn" autocomplete="off">
+            </label>
+            <button type="submit" [disabled]="createRoomForm.invalid">Skapa</button>
+        </form>
 
-<h2>Gå med i spelrum</h2>
-<form [formGroup]="joinRoomForm" (ngSubmit)="onSubmitJoinRoom()">
+        @if (errorMsgCreate()) {
+            <p class="errorMsg">! {{ errorMsgCreate() }}</p>
+        }
+    </section>
 
-    <label>
-        Ange ett användarnamn:
-        <input type="text" formControlName="username">
-    </label>
-<br>
-    <label>
-        Ange rumskod:
-        <input type="text" formControlName="roomCode" maxlength="5">
-    </label>
-<br>
-    <button type="submit" [disabled]="joinRoomForm.invalid">Gå med</button>
+    <section class="panel">
+        <h2 class="panel-title">Gå med</h2>
 
-</form>
+        <form [formGroup]="joinRoomForm" (ngSubmit)="onSubmitJoinRoom()">
+            <label>
+                Användarnamn
+                <input type="text" formControlName="username" placeholder="ditt namn" autocomplete="off">
+            </label>
+            <label>
+                Rumskod
+                <input type="text" formControlName="roomCode" maxlength="5"
+                    placeholder="ABCDE" class="code-input" autocomplete="off">
+            </label>
+            <button type="submit" [disabled]="joinRoomForm.invalid">Gå med</button>
+        </form>
 
-@if (errorMsgJoin()) {
+        @if (errorMsgJoin()) {
+            <p class="errorMsg">! {{ errorMsgJoin() }}</p>
+        }
+    </section>
 
-    <p class="errorMsg"> {{ errorMsgJoin() }}</p>
-
-}
+</div>
