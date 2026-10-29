@@ -1,6 +1,6 @@
 # Känner du boten?
 
-Ett chattspel i realtid där minst 2 och en hemlig AI chattar med varandra under alias. När tiden är slut röstar alla på vem de tror är boten.
+Ett chattspel i realtid där minst 2 spelare och en hemlig AI chattar med varandra under alias. När tiden är slut röstar alla på vem de tror är boten.
 
 **Spela här:** https://whoisthebot-frontend.onrender.com
 
