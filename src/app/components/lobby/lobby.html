@@ -1,29 +1,33 @@
-
 @if (gameRoom(); as room) {
-    <div class="lobby">
-        <h1>Lobby</h1>
-        
-        <h2>Rum: {{ room.roomCode }}</h2>
-        
-    
-        <h3>Spelare</h3>
-        <ul>
-            @for (player of room.players; track player.username) {
-            <li>{{ player.username }}
-                @if (player.isHost) {
-                (Host)
-                }
-            </li>
-            }
-        </ul>
-        @if (isHost()) {
 
-            <button (click)="onStartGame()" [disabled]="!enoughPlayersToStartGame()">Starta spelet</button>
-        } @else {
+    <h1>Lobby</h1>
 
-            <p>Väntar på att hosten ska starta spelet...</p>
-
-        }
-    
+    <div class="room-code-box">
+        <p class="label">RUMSKOD // dela med dina vänner</p>
+        <p class="room-code">{{ room.roomCode }}</p>
     </div>
+
+    <h3>Anslutna spelare [{{ room.players.length }}]</h3>
+
+    <ul class="player-list">
+        @for (player of room.players; track player.username) {
+            <li class="player">
+                <span class="online-dot"></span>
+                {{ player.username }}
+                @if (player.isHost) { <span class="host-tag">HOST</span> }
+            </li>
+        }
+    </ul>
+
+    @if (isHost()) {
+        <button type="button" class="start-button" [class.ready]="enoughPlayersToStartGame()"
+            (click)="onStartGame()" [disabled]="!enoughPlayersToStartGame()">
+            Starta spelet
+        </button>
+        @if (!enoughPlayersToStartGame()) {
+            <p class="waiting">Väntar på fler spelare<span class="dots"></span></p>
+        }
+    } @else {
+        <p class="waiting">Väntar på att värden startar spelet<span class="dots"></span></p>
+    }
 }

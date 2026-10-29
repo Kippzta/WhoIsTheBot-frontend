@@ -1,0 +1,151 @@
+/* ===== Uppstartssekvensen: en rad i taget ===== */
+.boot {
+  margin-bottom: 20px;
+}
+
+.boot-line {
+  margin: 0;
+  color: var(--green-dim);
+  opacity: 0;
+  animation: appear 0.3s var(--delay) forwards;
+}
+
+.ok {
+  color: var(--green);
+}
+
+.warn {
+  color: var(--red);
+  text-shadow: 0 0 6px rgba(255, 59, 92, 0.6);
+}
+
+@keyframes appear {
+  to { opacity: 1; }
+}
+
+/* ===== Titeln skrivs ut bokstav för bokstav ===== */
+.title-text {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+  width: 0;
+  animation: typing 1.6s steps(16) 1.2s forwards;
+}
+
+/* 16 tecken i "Känner du boten?", ett steg per tecken */
+@keyframes typing {
+  to { width: 16ch; }
+}
+
+.intro {
+  color: var(--green-dim);
+  opacity: 0;
+  animation: appear 0.5s 2.8s forwards;
+}
+
+/* ===== Två terminalpaneler bredvid varandra ===== */
+.panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 24px;
+  opacity: 0;
+  animation: slide-up 0.5s 3s forwards;
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.panel {
+  border: 1px solid var(--green-dim);
+  padding: 20px 16px 16px;
+  position: relative;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Panelen lyser upp när man skriver i den */
+.panel:focus-within {
+  border-color: var(--green);
+  box-shadow: 0 0 14px rgba(57, 255, 106, 0.3);
+}
+
+/* Panelens titel sitter i kanten, som på terminalfönstret */
+.panel-title {
+  position: absolute;
+  top: -14px;
+  left: 12px;
+  margin: 0;
+  padding: 0 8px;
+  background: var(--panel);
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.panel form {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.panel label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: var(--green-dim);
+}
+
+.panel input {
+  min-width: 0;
+  margin: 4px 0 0;
+}
+
+/* Rumskoden i stora bokstäver med luft emellan */
+.code-input {
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  font-family: var(--font-head);
+  font-size: 24px;
+}
+
+.panel button {
+  align-self: flex-start;
+  margin: 4px 0 0;
+}
+
+.errorMsg {
+  color: var(--red);
+  text-shadow: 0 0 6px rgba(255, 59, 92, 0.6);
+  margin: 12px 0 0;
+}
+
+.server-note {
+  color: var(--green-dim);
+  font-size: 13px;
+  margin-top: 24px;
+  opacity: 0;
+  animation: appear 0.5s 3.3s forwards;
+}
+
+/* ===== Mobil: panelerna under varandra ===== */
+@media (max-width: 600px) {
+  .panels {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+/* ===== Utan rörelse: visa allt direkt ===== */
+@media (prefers-reduced-motion: reduce) {
+  .boot-line, .intro, .panels, .server-note {
+    opacity: 1;
+    animation: none;
+  }
+  .title-text {
+    width: auto;
+    animation: none;
+  }
+}

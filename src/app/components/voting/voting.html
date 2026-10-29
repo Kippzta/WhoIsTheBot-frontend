@@ -1,15 +1,24 @@
-<h1>RÖSTA</h1>
+<h1>Rösta</h1>
 <h2>Vem tror du är boten?</h2>
 
 @if (myVote() === null) {
 
-    <p>Rösta på den du tror är boten:</p>
-    @for (alias of voteableAliases(); track alias) {
+    <p class="hint">Välj ett mål. Du kan bara rösta en gång.</p>
 
-        <button type="button" (click)="onVote(alias)"> {{ alias }} </button>
-
-    } 
+    <div class="targets">
+        @for (alias of voteableAliases(); track alias) {
+            <button type="button" class="target" (click)="onVote(alias)">
+                <span class="target-icon">◎</span>
+                {{ alias }}
+            </button>
+        }
+    </div>
 
 } @else {
-<p>Du röstade på: {{ myVote() }}. Väntar tills alla röstat klart...</p>
+
+    <div class="vote-locked">
+        <p class="locked-label">RÖST LÅST</p>
+        <p class="locked-alias">{{ myVote() }}</p>
+        <p class="waiting">Väntar på de andra<span class="dots"></span></p>
+    </div>
 }

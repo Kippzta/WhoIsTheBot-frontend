@@ -1,33 +1,47 @@
-<h1>Välkommen till chatten!</h1>
-<p>Ditt alias: {{ myAlias() }}</p>
+<header class="chat-header">
+    <div>
+        <h1>Chatten</h1>
+        <p class="my-alias">Du spelar som: <strong>{{ myAlias() }}</strong></p>
+    </div>
 
-@if (starterQuestion()) {
-
-    <h2> {{ starterQuestion() }}</h2>
-
-} @else {
-
-    <h2>Laddar in fråga</h2>
-}
-
-@if (roundTimer() !== null) {
-
-    <p>Tid kvar att chatta: {{ roundTimer() }}s</p>
-
-}
-<ul>
-    @for (message of chatMessages(); track $index) {
-
-    <li>
-        <strong>{{ message.alias }}:</strong> {{ message.text }}
-    </li>
-
+    @if (roundTimer() !== null) {
+        <p class="timer" [class.timer-low]="roundTimer()! <= 10">
+            ⏱ {{ roundTimer() }}s
+        </p>
     }
-</ul>
+</header>
 
-<form [formGroup]="chatRoomForm" (ngSubmit)="onSendMessage()">
+<p class="question">
+    @if (starterQuestion()) {
+        <span class="question-label">FRÅGA:</span> {{ starterQuestion() }}
+    } @else {
+        Laddar fråga...
+    }
+</p>
 
-    <input type="text" formControlName="text" [maxlength]="MAX_TEXT_LENGTH" placeholder="Skriv här...">
-    <button type="submit" [disabled]="chatRoomForm.invalid">Skicka</button>
+<section class="chat-window">
 
-</form>
+    <div class="chat-log">
+        <ul class="chat-lines">
+            @for (message of chatMessages(); track $index) {
+                <li class="chat-line" [class.mine]="message.alias === myAlias()">
+                    <span class="chat-alias">{{ message.alias }}: </span>
+                    <span class="chat-text">{{ message.text }}</span>
+                </li>
+            } @empty {
+                <li class="chat-line system">
+                    <span class="chat-alias">*</span>
+                    <span class="chat-text">Ingen har skrivit något än. Var först!</span>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <form class="chat-input" [formGroup]="chatRoomForm" (ngSubmit)="onSendMessage()">
+        <span class="prompt">&gt;</span>
+        <input type="text" formControlName="text" [maxlength]="MAX_TEXT_LENGTH"
+            placeholder="Skriv ett meddelande..." autocomplete="off">
+        <button type="submit" [disabled]="chatRoomForm.invalid">Skicka</button>
+    </form>
+
+</section>

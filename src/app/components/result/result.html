@@ -1,32 +1,32 @@
 @if (gameResult(); as result) {
 
-    <h2>Boten var: {{ result.botAlias }}</h2>
+    <h1>Resultat</h1>
 
-    <ul>
+    <div class="reveal">
+        <p class="scanning">Analyserar spelare<span class="dots"></span></p>
+        <p class="reveal-label">BOTEN VAR</p>
+        <p class="bot-alias" [attr.data-text]="result.botAlias">{{ result.botAlias }}</p>
+    </div>
+
+    <ul class="results">
         @for (player of result.playerResultRespDTO; track player.username) {
-            <li>
-                <strong>{{ player.username }}</strong>
-                @if (player.alias === myAlias()){ (du) }
-                var {{ player.alias }},
-                och röstade på {{ player.votedForAlias }}.
-
-                @if(player.guessedRight) {
-
-                    ✅ Rätt!
-
-                } @else {
-
-                    ❌ Fel
-
-                }
-
+            <li class="result-row" [class.correct]="player.guessedRight"
+                [class.mine]="player.alias === myAlias()">
+                <span class="who">
+                    <strong>{{ player.username }}</strong>
+                    @if (player.alias === myAlias()) { <span class="you">(du)</span> }
+                    <span class="as">var {{ player.alias }}</span>
+                </span>
+                <span class="vote">röstade på {{ player.votedForAlias }}</span>
+                <span class="verdict">
+                    @if (player.guessedRight) { ✅ Rätt } @else { ❌ Fel }
+                </span>
             </li>
         }
-            
     </ul>
-    
-    <button (click)="onPlayAgain()">Spela igen</button>
+
+    <button type="button" (click)="onPlayAgain()">Spela igen</button>
 
 } @else {
-    <h3>Rösterna räknas...</h3>
+    <h3>Rösterna räknas<span class="dots"></span></h3>
 }
