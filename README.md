@@ -119,7 +119,7 @@ I utvecklingsläge pratar frontenden med backenden på `http://localhost:8080`, 
 
 ---
 
-## Kända buggar och begränsningar
+## Kända buggar
 
 - Om man laddar om sidan under röstningen visas röstknapparna igen, även om man redan röstat. Backenden nekar en andra röst.
 - Vid omladdning skickas inte chatthistoriken igen.
